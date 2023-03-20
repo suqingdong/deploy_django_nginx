@@ -1,15 +1,15 @@
 
 uwsgi = '''\
 [uwsgi]
+workers=2
 chdir={API_ROOT}
 module=proj.wsgi:application
 master=True
 vacuum=True
 socket={PROJ_DIR}/logs/uwsgi.sock
 pidfile={PROJ_DIR}/logs/uwsgi.pid
-daemonize=logs/uwsgi.log
+daemonize={PROJ_DIR}/logs/uwsgi.log
 uwsgi_read_timeout=300
-# pythonpath=/data/software/conda/miniconda3/bin/python3.9
 '''
 
 nginx = '''\
