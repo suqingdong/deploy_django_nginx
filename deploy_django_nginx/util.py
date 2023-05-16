@@ -8,7 +8,7 @@ from webrequests import WebRequest
 
 def check_port(port):
     """
-    检查指定端口是否被占用，如占用，则+1
+    Check if the specified port is occupied, if it is being used, then add 1
     """
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         while True:

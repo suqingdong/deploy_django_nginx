@@ -1,35 +1,32 @@
 #!/usr/bin/env python
-import sys
 import getpass
 from pathlib import Path
 
 import click
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-print(BASE_DIR)
-sys.path.insert(0, str(BASE_DIR))
 
-from deploy_django_nginx import config, util, build
+from deploy_django_nginx import config, util, version_info
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-?', '-h', '--help'])
-
 
 __epilog__ = click.style('''
 
 \b
 example:
     deploy_django_nginx \\
-        -b /path/to/api/ \\                     # 后端根目录
-        -f /path/to/app/dist/ \\                # 前端dist/build目录
-        -n proj \\                              # Django项目名称
-        -p 1080 \\                              # 网络端口[可不写，会自动检查]
-        -d /data2/work/novodb/beet \\           # 生成目录
-''', fg='cyan')
+        -b /path/to/api/ \\
+        -f /path/to/app/dist/ \\
+        -n proj \\
+        -p 1080 \\
+        -d ./deploy
+
+contact: {author} <{author_email}>
+''', fg='cyan').format(**version_info)
 
 
 @click.command(
-    help=click.style('前后端一键化部署工具', fg='green', bold=True),
+    help=click.style(version_info['desc'], fg='green', bold=True),
     context_settings=CONTEXT_SETTINGS,
     no_args_is_help=True,
     epilog=__epilog__,
@@ -48,10 +45,10 @@ def cli(**kwargs):
     if proj_dir.exists():
 
         if proj_dir.owner() != getpass.getuser():
-            click.secho(f'[{proj_dir}]项目路径已存在，请检查或更换项目名称！', fg='red')
+            click.secho(f'[{proj_dir}]The project path already exists. Please check or replace the project name!', fg='red')
             exit(1)
 
-        if not (kwargs['force'] or click.confirm('项目路径已存在，是否覆盖')):
+        if not (kwargs['force'] or click.confirm('The project path already exists. Do you want to overwrite it')):
             exit(1)
 
     api_root = proj_dir.joinpath('api')
@@ -91,14 +88,13 @@ def cli(**kwargs):
 
     util.write_file(
         proj_dir.joinpath('URL'),
-        f'内网: http://{util.get_intranet_ip()}:{port}\n公网: http://{util.get_internet_ip()}:{port}',
+        f'Intranet: http://{util.get_intranet_ip()}:{port}\nInternet: http://{util.get_internet_ip()}:{port}',
     )
 
     click.secho(f'''
-        项目路径：\t{proj_dir}
-        启动服务：\tsh {proj_dir.joinpath('start.sh')}
+        Project Path: \t{proj_dir}
+        Start Service: \tsh {proj_dir.joinpath('start.sh')}
     ''', fg='cyan')
-
 
 
 def main():

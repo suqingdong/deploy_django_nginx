@@ -1,11 +1,16 @@
-# 前后端一键化部署工具
+# Deploy Django with uWSGI and Frontend with Nginx
 - Nginx + uWSGI + Django
 
-### 参数说明
+
+### Installation
+```bash
+python3 -m pip install deploy_django_nginx
 ```
-Options:
-  -f, --front-end TEXT  the dist directory of front-end  [required]
-  -b, --back-end TEXT   the directory of back-end  [required]
+
+### Options
+```
+  -f, --front-end TEXT  the dist directory of frontend  [required]
+  -b, --back-end TEXT   the directory of backend  [required]
   -n, --name TEXT       the name of django project  [required]
   -d, --directory TEXT  the directory to deploy  [default: ./deploy]
   -p, --port INTEGER    the port number  [default: 1080]
@@ -13,12 +18,12 @@ Options:
   -?, -h, --help        Show this message and exit.
 ```
 
-### 使用示例
+### Examples
 ```bash
 deploy_django_nginx \
-  -b /path/to/api  \                  # 后端根目录
-  -f /path/to/app/dist/ \             # 前端dist目录
-  -n proj \                           # Django项目名称
-  -p 1080 \                           # 网络端口[可不写，会自动检查]
-  -d /data2/work/novodb/beet \        # 生成目录
+  -b /path/to/api  \                  # backend root directory
+  -f /path/to/app/dist/ \             # frontend dist directory
+  -n proj \                           # django project name
+  -p 1080 \                           # network port
+  -d /data2/work/novodb/beet \        # destination directory
 ```
