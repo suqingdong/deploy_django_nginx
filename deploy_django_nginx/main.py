@@ -20,11 +20,11 @@ __epilog__ = click.style('''
 \b
 example:
     deploy_django_nginx \\
-        -b /data2/work/linmeng/proj/novodb/beet/api/ \\        # 后端根目录
-        -f /data2/work/linmeng/proj/novodb/beet/app/dist/ \\   # 前端dist/build目录
-        -n proj \\                                             # Django项目名称
-        -p 1080 \\                                             # 网络端口[可不写，会自动检查]
-        -d /data2/work/novodb/beet \\                          # 生成目录
+        -b /path/to/api/ \\                     # 后端根目录
+        -f /path/to/app/dist/ \\                # 前端dist/build目录
+        -n proj \\                              # Django项目名称
+        -p 1080 \\                              # 网络端口[可不写，会自动检查]
+        -d /data2/work/novodb/beet \\           # 生成目录
 ''', fg='cyan')
 
 
@@ -40,7 +40,7 @@ example:
 @click.option('-d', '--directory', help='the directory to deploy', default='./deploy', show_default=True)
 @click.option('-p', '--port', help='the port number', default=1080, show_default=True)
 @click.option('-y', '--force', help='force overwrite directory', is_flag=True)
-def main(**kwargs):
+def cli(**kwargs):
 
     api_name = kwargs['name']
     proj_dir = Path(kwargs['directory']).resolve()
@@ -98,6 +98,11 @@ def main(**kwargs):
         项目路径：\t{proj_dir}
         启动服务：\tsh {proj_dir.joinpath('start.sh')}
     ''', fg='cyan')
+
+
+
+def main():
+    cli()
 
 
 if __name__ == '__main__':
