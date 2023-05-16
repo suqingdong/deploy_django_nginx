@@ -20,7 +20,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     entry_points={'console_scripts': [
-        'name = deploy_django_nginx.main:main',
+        'deploy_django_nginx = deploy_django_nginx.main:main',
     ]},
     classifiers=[
         'Development Status :: 5 - Production/Stable',
