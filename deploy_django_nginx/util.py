@@ -3,6 +3,7 @@ import subprocess as sp
 from pathlib import Path
 
 import click
+from webrequests import WebRequest
 
 
 def check_port(port):
@@ -31,3 +32,15 @@ def write_file(file, content):
     with Path(file).open('w') as out:
         out.write(content.strip() + '\n')
     click.secho(f'>>> write file: {file}')
+
+
+def get_intranet_ip():
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+    return ip
+
+
+def get_internet_ip():
+    soup = WebRequest.get_soup('http://cip.cc')
+    ip = soup.select_one('.data pre').text.split('\n')[0].split()[-1]
+    return ip

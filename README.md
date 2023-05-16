@@ -1,5 +1,5 @@
-# NovoDB前后端一键化部署工具
-- Nginx + uWSGI
+# 前后端一键化部署工具
+- Nginx + uWSGI + Django
 
 ### 参数说明
 ```
@@ -15,7 +15,7 @@ Options:
 
 ### 使用示例
 ```bash
-novodb_start \
+deploy_django_nginx \
     -b /data2/work/linmeng/proj/novodb/beet/api/ \        # 后端根目录
     -f /data2/work/linmeng/proj/novodb/beet/app/dist/ \   # 前端dist目录
     -n demo \                                             # 项目名称

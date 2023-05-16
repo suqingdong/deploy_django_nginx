@@ -3,7 +3,7 @@ uwsgi = '''\
 [uwsgi]
 workers=2
 chdir={API_ROOT}
-module=proj.wsgi:application
+module={API_NAME}.wsgi:application
 master=True
 vacuum=True
 socket={PROJ_DIR}/logs/uwsgi.sock
