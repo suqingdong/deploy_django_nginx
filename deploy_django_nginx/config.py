@@ -52,11 +52,13 @@ http {{
 
     root {APP_ROOT};
     index index.html;
+    
+    try_files $uri $uri/ /index.html;
 
-    # django static
-    location /static {{
-      alias {API_ROOT}/static;
-    }}
+    # # django static
+    # location /api/static {{
+    #   alias {API_ROOT}/static;
+    # }}
 
     # django project
     location /api {{
@@ -73,14 +75,18 @@ http {{
 }}
 '''
 
-shell = '''\
+start_shell = '''\
 cd {PROJ_DIR}
 
 # start
 uwsgi --ini {PROJ_DIR}/config/uwsgi.ini
 sudo nginx -c {PROJ_DIR}/config/nginx.conf
+'''
+
+stop_shell = '''\
+cd {PROJ_DIR}
 
 # stop
-# uwsgi --stop {PROJ_DIR}/logs/uwsgi.pid
-# sudo nginx -c {PROJ_DIR}/config/nginx.conf -s stop
+uwsgi --stop {PROJ_DIR}/logs/uwsgi.pid
+sudo nginx -c {PROJ_DIR}/config/nginx.conf -s stop
 '''

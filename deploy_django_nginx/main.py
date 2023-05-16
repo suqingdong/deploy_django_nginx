@@ -21,7 +21,7 @@ __epilog__ = click.style('''
 example:
     deploy_django_nginx \\
         -b /data2/work/linmeng/proj/novodb/beet/api/ \\        # 后端根目录
-        -f /data2/work/linmeng/proj/novodb/beet/app/dist/ \\   # 前端dist目录
+        -f /data2/work/linmeng/proj/novodb/beet/app/dist/ \\   # 前端dist/build目录
         -n proj \\                                             # Django项目名称
         -p 1080 \\                                             # 网络端口[可不写，会自动检查]
         -d /data2/work/novodb/beet \\                          # 生成目录
@@ -81,7 +81,12 @@ def main(**kwargs):
 
     util.write_file(
         proj_dir.joinpath('start.sh'),
-        config.shell.format(PROJ_DIR=proj_dir),
+        config.start_shell.format(PROJ_DIR=proj_dir),
+    )
+
+    util.write_file(
+        proj_dir.joinpath('stop.sh'),
+        config.stop_shell.format(PROJ_DIR=proj_dir),
     )
 
     util.write_file(
