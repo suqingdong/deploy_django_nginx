@@ -10,8 +10,8 @@ def check_port(port):
     """
     Check if the specified port is occupied, if it is being used, then add 1
     """
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        while True:
+    while True:
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             if s.connect_ex(('localhost', port)) == 0:
                 click.secho(f'port is alreay in use: {port}', fg='yellow')
                 port += 1
